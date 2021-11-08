@@ -15,7 +15,7 @@ async function main() {
 
   // We get the contract to deploy
   const [deployer] = await ethers.getSigners();
-  const ContractFactory = await hre.ethers.getContractFactory('ECon');
+  const ContractFactory = await hre.ethers.getContractFactory('DCon');
   const contract = await ContractFactory.deploy();
 
   await contract.deployed();

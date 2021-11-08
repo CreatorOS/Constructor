@@ -8,12 +8,11 @@ Some characteristics of a constructor:
 - It is used to initialize state variables of a contract.
 - A constructor can be either public or internal.
 
+## Passing parameters to a constructor
+
 Here are examples of how to pass arguments to `constructors`.
 
 ```
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.3;
-
 // Base contract X
 contract X {
     string public name;
@@ -31,37 +30,40 @@ contract Y {
         text = _text;
     }
 }
+```
 
-// There are 2 ways to initialize parent contract with parameters.
+## Initializing parent contract with parameters
 
-// Pass the parameters here in the inheritance list.
-contract B is X("Input to X"), Y("Input to Y") {
+There are 2 ways to initialize parent contract with parameters.
+
+Pass the parameters in the inheritance list.
+
+```
+contract BCon is X("Input to X"), Y("Input to Y") {
 
 }
+```
 
-contract C is X, Y {
-    // Pass the parameters here in the constructor,
-    // similar to function modifiers.
+Pass the parameters in the constructor, similar to function modifiers.
+
+```
+contract CCon is X, Y {
     constructor(string memory _name, string memory _text) X(_name) Y(_text) {}
 }
+```
 
-// Parent constructors are always called in the order of inheritance
-// regardless of the order of parent contracts listed in the
-// constructor of the child contract.
+## Order of contructor execution
 
-// Order of constructors called:
-// 1. Y
-// 2. X
-// 3. D
-contract D is X, Y {
+Parent constructors are always called in the order of inheritance regardless of the order of parent contracts listed in the constructor of the child contract.
+
+Order of constructors called:
+
+1. Y
+2. X
+3. DCon
+
+```
+contract DCon is X, Y {
     constructor() X("X was called") Y("Y was called") {}
-}
-
-// Order of constructors called:
-// 1. Y
-// 2. X
-// 3. E
-contract E is X, Y {
-    constructor() Y("Y was called") X("X was called") {}
 }
 ```
